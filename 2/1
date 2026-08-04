@@ -1,1 +1,18 @@
-
+Pour l'émission des events, je vois send_mass_update_data.py ouvert dans tes onglets sur la capture précédente — c'est probablement déjà le mécanisme utilisé pour l'ADL. Peux-tu me montrer son contenu (ou au moins la signature de la fonction principale) ? Je veux réutiliser exactement le même mécanisme plutôt que d'en inventer un nouveau.
+En attendant, je construis tout ce qu'on peut déjà : l'orchestration parse → refetch → diff, prête à brancher sur l'émission d'events dès que j'ai ce fichier.
+Maintenant l'orchestration qui relie tout (parse → refetch → diff), avec un point d'ancrage clair pour l'émission d'events dès que tu me montres send_mass_update_data.py :
+Test de l'orchestration, en mockant l'appel réseau vers cosmos_api :
+Les 3 tests passent, y compris le cas important : aucun appel réseau si le fichier n'a pas de lignes (évite un appel inutile à cosmos_api).
+Nouveaux fichiers de cette étape
+Fichier
+Destination
+client_smartgps_refetch_ADDITION.py
+copier get_refetch_fees_data dans src/client/smartgps.py
+util/mass_update/fees_upload.py
+src/util/mass_update/ (mis à jour : accepte un Workbook déjà chargé, pas seulement des bytes)
+services/fee_diff_service.py
+src/services/
+util/mass_update/process_all_fees_mass_update.py
+src/util/mass_update/ — orchestrateur complet
+Tout est testé (parse → refetch mocké → diff), y compris le cas "pas de lignes = pas d'appel réseau".
+Il ne manque plus qu'une chose pour boucler complètement : le contenu de send_mass_update_data.py, pour brancher l'émission des events sur diffs (la liste [{"sha_cd", "field", "old_value", "new_value"}, ...] que process_all_fees_mass_update renvoie déjà prête à l'emploi). Montre-moi ce fichier quand tu peux et je termine le branchement.
