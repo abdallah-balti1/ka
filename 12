@@ -1,0 +1,34 @@
+from constants.fees_template import HEADERS as ALL_FEES_HEADERS, SECTION_TITLE_ROW, COLUMN_LABEL_ROW
+
+
+def _get_headers_from_rows(ws, row_indices) -> set:
+    """Récupère l'ensemble des valeurs non vides sur les lignes données —
+    généralisation de _get_headers_from_row pour couvrir plusieurs lignes
+    d'en-tête (notre template a 3 niveaux, pas 1 seul)."""
+    headers = set()
+    for row_index in row_indices:
+        headers |= {
+            str(cell.value).strip()
+            for cell in ws[row_index]
+            if cell.value is not None and str(cell.value).strip()
+        }
+    return headers
+
+
+def _is_all_fees_worksheet(ws) -> bool:
+    """Returns True if the worksheet matches the 'All Fees' mass update
+    template (structure à 3 lignes d'en-tête : section / sous-section /
+    colonne — les labels de colonnes de base sont sur la ligne 1, les
+    labels de colonnes de fees sont sur la ligne 3)."""
+    expected_headers = set(ALL_FEES_HEADERS)
+    found_headers = _get_headers_from_rows(ws, (SECTION_TITLE_ROW, COLUMN_LABEL_ROW))
+    return expected_headers.issubset(found_headers)
+
+
+def is_all_fees_mass_update(wb: Workbook) -> bool:
+    """Parcourt les worksheets du classeur, comme get_mu_version, et
+    retourne True si l'une d'elles matche la structure 'All Fees'."""
+    for ws in wb.worksheets:
+        if _is_all_fees_worksheet(ws):
+            return True
+    return False
