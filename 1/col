@@ -1,0 +1,10 @@
+COSMOS_ID_COLUMN_INDEX = 1
+PROD_CD_COLUMN_INDEX = 2   # <-- AJOUTE CETTE LIGNE
+
+
+  BASE_COLUMNS: List[Tuple[str, str]] = [
+    ("Cosmos ID", COSMOS_ID_KEY),
+    ("Product Cd", "prod_cd"),   # <-- AJOUTE CETTE LIGNE
+    ("Umbrella name", "umb_name_lbl"),
+    ...
+]
