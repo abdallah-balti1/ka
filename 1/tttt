@@ -1,0 +1,41 @@
+mu_version = get_mu_version(workbook)
+
+    # NOUVEAU : à vérifier EN PREMIER, avant tous les autres cas
+    if is_all_fees_mass_update(workbook):
+        diffs = process_all_fees_mass_update(workbook)
+        (
+            cre_data_by_product_id,
+            mapping_entity_line_dict,
+            skipped_new_fees,
+        ) = build_cre_data_for_all_fees(user, task, diffs)
+
+        if skipped_new_fees:
+            for skipped in skipped_new_fees:
+                report_document_content += (
+                    f"SKIPPED (no fee_id/fee_value_id): "
+                    f"sha_cd={skipped['sha_cd']} field={skipped['field']}\n"
+                )
+            report_document_log(report_document, report_document_content)
+
+    # Handle special case for Specific Fees (ADL) — INCHANGÉ
+    elif mass_update_template.entity_type == FEES and mu_version == MASS_UPDATE_VERSION_3:
+        (
+            cre_data_by_product_id,
+            mapping_entity_line_dict,
+        ) = create_cre_data_for_mass_update_fees_to_send_to_cosmos(user, task, workbook, mass_update_template)
+    # Handle special case for MU actors — INCHANGÉ
+    elif mass_update_template.entity_type == PIVOT_ACTOR_IN_CHARGE and mu_version == MASS_UPDATE_VERSION_2:
+        (
+            cre_data_by_product_id,
+            mapping_entity_line_dict,
+        ) = create_cre_data_for_mass_update_actors_to_send_to_cosmos(user, task, workbook, mass_update_template)
+    else:
+        # Generate CRE data — INCHANGÉ
+        (
+            cre_data_by_product_id,
+            mapping_entity_line_dict,
+        ) = create_cre_data_to_send_to_cosmos(user, task, workbook, mass_update_template)
+
+    for k, v in cre_data_by_product_id.items():
+        logging.info(...)
+    # reste de la fonction : INCHANGÉ à partir d'ici
