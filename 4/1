@@ -4,3 +4,6 @@ find . -name "refetch_fees_data.py" -not -path "*/.venv/*"
 
 grep -rn "RefetchFeesDataResource\|refetch_fees_data" test/ --include="*.py" | grep -i "patch\|mock"
 grep -rln "autouse=True" test/
+
+git log --oneline -- src/routes/__init__.py src/server.py src/app.py 2>/dev/null | head -5
+git show <commit_ajout_endpoints> -- src/routes/__init__.py src/server.py src/app.py
