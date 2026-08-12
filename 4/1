@@ -27,3 +27,7 @@ find . -name "index.html" -path "*coverage*" coverage -path "*/.venv/*"
 pip show resources
 python -c "import resources; print(resources.__file__)"coverage html --data-file=.coverage -d coverage_html
 open coverage_html/index.html
+
+
+coverage html --data-file=.coverage -d coverage_html
+open coverage_html/index.html
