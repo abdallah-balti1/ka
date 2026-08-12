@@ -31,3 +31,16 @@ open coverage_html/index.html
 
 coverage html --data-file=.coverage -d coverage_html
 open coverage_html/index.html
+
+
+
+def test_refetch_fees_data_list_empty_after_strip(self):
+    """Une liste avec uniquement des chaînes vides/espaces doit être rejetée après nettoyage"""
+    response = self.client.post(
+        "smartgps/refetch_fees_data",
+        data=json.dumps({"sha_cd_list": ["", "   "]}),
+        content_type="application/json",
+    )
+    self.assertEqual(response.status_code, 400)
+    response_json = json.loads(response.get_data().decode())
+    self.assertEqual(response_json["error"], "sha_cd_list is empty")
