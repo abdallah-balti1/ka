@@ -14,3 +14,7 @@ cat src/routes/__init__.py
 cat src/resources/retrieve_fees_data/__init__.py
 
 ls test/api/*/__init__.py
+
+cat .coveragerc 2>/dev/null
+grep -A30 "\[tool.coverage" pyproject.toml 2>/dev/null
+grep -A30 "\[coverage:" setup.cfg 2>/dev/null
