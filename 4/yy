@@ -1,0 +1,21 @@
+Bonjour,
+
+Je pars en congés et voulais faire un point rapide avant.
+
+Le module de mass update "All Fees" (Management, Distribution, Charity, Advisory, Subscription/Redemption/Conversion, Specific & External fees) est terminé et déployé en environnement INT.
+
+Ce chantier a pris plusieurs semaines : il touche les deux microservices (cosmos_api et flowr-api), avec :
+- une architecture repensée pour rester performante à grande échelle (évite les requêtes DB trop lourdes en multipliant les jointures, remplacé par un pivot côté applicatif)
+- la génération dynamique du template Excel avec toutes les sections de fees
+- la détection des modifications utilisateur à l'upload (comparaison avec l'état frais en base, pas de duplication de données dans le fichier)
+- l'envoi des changements vers Cosmos
+- une suite de tests complète des deux côtés
+
+J'ai laissé [X] tester en INT pendant mon absence - je reviendrai vers lui/elle à mon retour pour les derniers ajustements.
+
+Point d'attention : l'envoi des events vers Cosmos peut occasionnellement échouer à cause d'une désynchronisation de données entre Cosmos et Flowr (l'état récupéré au moment de l'upload peut différer de ce qui est attendu). Rien de bloquant, mais à garder en tête si [X] rencontre ce type d'erreur pendant les tests.
+
+Vous trouverez en pièce jointe un exemple du template généré.
+
+Bonnes vacances,
+[Prénom]
