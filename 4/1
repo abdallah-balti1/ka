@@ -21,3 +21,9 @@ grep -A30 "\[coverage:" setup.cfg 2>/dev/null
 
 
 grep -B2 -A15 "pytest\|coverage combine\|coverage run" .circleci/config.yml
+
+find . -name "index.html" -path "*coverage*" coverage -path "*/.venv/*"
+
+pip show resources
+python -c "import resources; print(resources.__file__)"coverage html --data-file=.coverage -d coverage_html
+open coverage_html/index.html
