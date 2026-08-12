@@ -7,3 +7,7 @@ grep -rln "autouse=True" test/
 
 git log --oneline -- src/routes/__init__.py src/server.py src/app.py 2>/dev/null | head -5
 git show <commit_ajout_endpoints> -- src/routes/__init__.py src/server.py src/app.py
+
+git show 393d131 --stat
+
+cat src/routes/__init__.py
