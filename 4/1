@@ -1,1 +1,1 @@
-
+pytest test/api/refetch_fees_data/test_refetch_fees_data.py -v --cov=resources.retrieve_fees_data.refetch_fees_data --cov-report=term-missing
