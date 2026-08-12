@@ -18,3 +18,6 @@ ls test/api/*/__init__.py
 cat .coveragerc 2>/dev/null
 grep -A30 "\[tool.coverage" pyproject.toml 2>/dev/null
 grep -A30 "\[coverage:" setup.cfg 2>/dev/null
+
+
+grep -B2 -A15 "pytest\|coverage combine\|coverage run" .circleci/config.yml
