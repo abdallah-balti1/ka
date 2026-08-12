@@ -1,3 +1,6 @@
 pytest test/api/refetch_fees_data/test_refetch_fees_data.py -v --cov=resources.retrieve_fees_data.refetch_fees_data --cov-report=term-missing
 
 find . -name "refetch_fees_data.py" -not -path "*/.venv/*"
+
+grep -rn "RefetchFeesDataResource\|refetch_fees_data" test/ --include="*.py" | grep -i "patch\|mock"
+grep -rln "autouse=True" test/
