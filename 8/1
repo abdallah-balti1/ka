@@ -1,1 +1,9 @@
-
+except Exception:
+    print(
+        f"[DEBUG CRE_DATA] row_index={row_index} column_name={column_name} "
+        f"new_field_value={new_field_value!r} has_label={has_label} "
+        f"field_type={field_metadata.get('type')} "
+        f"pivot_field_name={field_metadata.get('pivot_field_name')} "
+        f"entity_id={entity_id!r}"
+    )
+    raise
